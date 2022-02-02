@@ -19,6 +19,8 @@ var TbDeviceController = (function(){
         if(this.domain.length === 0) {
             throw new Error('Domain parameter must be specified as a string.');
         }
+        this.token = (typeof options === 'object') ? (options.token ? options.token : {}) : {};
+        this.apiKey = (typeof options === 'object') ? (options.apiKey ? options.apiKey : {}) : {};
     }
 
     function mergeQueryParams(parameters, queryParameters) {
@@ -92,7 +94,55 @@ var TbDeviceController = (function(){
         });
     };
 
+          /**
+            * Set Token
+            * @method
+            * @name TbDeviceController#setToken
+            * @param {string} value - token's value
+            * @param {string} headerOrQueryName - the header or query name to send the token at
+            * @param {boolean} isQuery - true if send the token as query param, otherwise, send as header param
+            */
+           TbDeviceController.prototype.setToken = function (value, headerOrQueryName, isQuery) {
+            this.token.value = value;
+            this.token.headerOrQueryName = headerOrQueryName;
+            this.token.isQuery = isQuery;
+        };
+        /**
+        * Set Api Key
+        * @method
+        * @name TbDeviceController#setApiKey
+        * @param {string} value - apiKey's value
+        * @param {string} headerOrQueryName - the header or query name to send the apiKey at
+        * @param {boolean} isQuery - true if send the apiKey as query param, otherwise, send as header param
+        */
+        TbDeviceController.prototype.setApiKey = function (value, headerOrQueryName, isQuery) {
+            this.apiKey.value = value;
+            this.apiKey.headerOrQueryName = headerOrQueryName;
+            this.apiKey.isQuery = isQuery;
+        };
+    /**
+    * Set Auth headers
+    * @method
+    * @name TbDeviceController#setAuthHeaders
+    * @param {object} headerParams - headers object
+    */
 
+    
+    TbDeviceController.prototype.setAuthHeaders = function (headerParams) {
+        var headers = headerParams ? headerParams : {};
+        if (!this.token.isQuery) {
+            if (this.token.headerOrQueryName) {
+                headers[this.token.headerOrQueryName] = this.token.value;
+            } else if (this.token.value) {
+                headers['Authorization'] = 'Bearer ' + this.token.value;
+            }
+        }
+        if (!this.apiKey.isQuery && this.apiKey.headerOrQueryName) {
+            //headers[this.apiKey.headerOrQueryName] = this.apiKey.value;
+            headers['Authorization'] = 'Bearer ' + this.apiKey.value;
+        }
+        return headers;
+    };
 /**
  * There's an ability to import the bulk of devices using the only .csv file.
 

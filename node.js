@@ -4,6 +4,7 @@ var lib = require('./lib.js');
 module.exports = function (RED) {
     function TbDeviceControllerNode(config) {
         RED.nodes.createNode(this, config);
+        this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
         this.processDevicesBulkImportUsingPOST_body = config.processDevicesBulkImportUsingPOST_body;
         this.processDevicesBulkImportUsingPOST_bodyType = config.processDevicesBulkImportUsingPOST_bodyType || 'str';
@@ -19,11 +20,31 @@ module.exports = function (RED) {
         this.getDeviceCredentialsByDeviceIdUsingGET_deviceIdType = config.getDeviceCredentialsByDeviceIdUsingGET_deviceIdType || 'str';
         this.findByQueryUsingPOST_1_body = config.findByQueryUsingPOST_1_body;
         this.findByQueryUsingPOST_1_bodyType = config.findByQueryUsingPOST_1_bodyType || 'str';
+       
         var node = this;
 
         node.on('input', function (msg) {
             var errorFlag = false;
             var client = new lib.TbDeviceController();
+            if (!errorFlag && this.service && this.service.credentials && this.service.credentials.secureTokenValue) {
+                if (this.service.secureTokenIsQuery) {
+                    client.setToken(this.service.credentials.secureTokenValue,
+                                    this.service.secureTokenHeaderOrQueryName, true);
+                } else {
+                    client.setToken(this.service.credentials.secureTokenValue,
+                                    this.service.secureTokenHeaderOrQueryName, false);
+                }
+            }
+            if (!errorFlag && this.service && this.service.credentials && this.service.credentials.secureApiKeyValue) {
+                if (this.service.secureApiKeyIsQuery) {
+                    client.setApiKey(this.service.credentials.secureApiKeyValue,
+                                     this.service.secureApiKeyHeaderOrQueryName, true);
+                } else {
+                    client.setApiKey(this.service.credentials.secureApiKeyValue,
+                                     this.service.secureApiKeyHeaderOrQueryName, false);
+                }
+            }
+
             if (!errorFlag) {
                 client.body = msg.payload;
             }
@@ -175,4 +196,22 @@ module.exports = function (RED) {
     }
 
     RED.nodes.registerType('tb-device-controller', TbDeviceControllerNode);
+    function TbDeviceControllerServiceNode(n) {
+        RED.nodes.createNode(this, n);
+
+        this.secureTokenValue = n.secureTokenValue;
+        this.secureTokenHeaderOrQueryName = n.secureTokenHeaderOrQueryName;
+        this.secureTokenIsQuery = n.secureTokenIsQuery;
+        this.secureApiKeyValue = n.secureApiKeyValue;
+        this.secureApiKeyHeaderOrQueryName = n.secureApiKeyHeaderOrQueryName;
+        this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
+    }
+
+    RED.nodes.registerType('tb-device-controller-service', TbDeviceControllerServiceNode, {
+        credentials: {
+            secureTokenValue: { type: 'password' },
+            secureApiKeyValue: { type: 'password' },
+            temp: { type: 'text' }
+        }
+    });
 };
