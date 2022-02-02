@@ -6,13 +6,19 @@
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\" --timeout 3000"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akashtalole/node-red-contrib-tb-device-controller.git"
+  },
   "node-red": {
     "nodes": {
       "tb-device-controller": "node.js"
     }
   },
   "keywords": [
-    "node-red-nodegen"
+    "node-red",
+    "thingsboard",
+    "device-api"
   ],
   "dependencies": {
     "q": "1.5.1",
@@ -24,6 +30,10 @@
     "node-red": "^1.0.4",
     "node-red-node-test-helper": "^0.2.3"
   },
-  "author": "",
-  "license": "Apache License Version 2.0"
+  "author": "Akash Talole",
+  "license": "Apache License Version 2.0",
+  "bugs": {
+    "url": "https://github.com/akashtalole/node-red-contrib-tb-device-controller/issues"
+  },
+  "homepage": "https://github.com/akashtalole/node-red-contrib-tb-device-controller#readme"
 }
