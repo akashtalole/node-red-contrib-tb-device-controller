@@ -1,0 +1,28 @@
+{
+    "TbDeviceController": {
+        "label": {
+            "service": "Service",
+            "method": "Methode",
+            "host": "Host",
+            "header": "Header",
+            "value": "Wert",
+            "isQuery": "Suchanfrage"
+        },
+        "status": {
+            "requesting": "Anfrage..."
+        },
+        "parameters": {
+            "processDevicesBulkImportUsingPOST": "POST /api/device/bulk_import",
+            "body": "body",
+            "updateDeviceCredentialsUsingPOST": "POST /api/device/credentials",
+            "getDeviceInfoByIdUsingGET": "GET /api/device/info/{deviceId}",
+            "deviceId": "deviceId",
+            "getDeviceTypesUsingGET": "GET /api/device/types",
+            "getDeviceByIdUsingGET": "GET /api/device/{deviceId}",
+            "deleteDeviceUsingDELETE": "DELETE /api/device/{deviceId}",
+            "getDeviceCredentialsByDeviceIdUsingGET": "GET /api/device/{deviceId}/credentials",
+            "findByQueryUsingPOST_1": "POST /api/devices",
+            "optionalParameters": "Optionen"
+        }
+    }
+}

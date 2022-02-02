@@ -1,0 +1,340 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tb-device-controller', {
+        category: 'function',
+        color: '#89bf04',
+        defaults: {
+            method: { value: "", required: true },
+            processDevicesBulkImportUsingPOST_body: { value: "" },
+            processDevicesBulkImportUsingPOST_bodyType: { value: "str" },
+            updateDeviceCredentialsUsingPOST_body: { value: "" },
+            updateDeviceCredentialsUsingPOST_bodyType: { value: "str" },
+            getDeviceInfoByIdUsingGET_deviceId: { value: "" },
+            getDeviceInfoByIdUsingGET_deviceIdType: { value: "str" },
+            getDeviceByIdUsingGET_deviceId: { value: "" },
+            getDeviceByIdUsingGET_deviceIdType: { value: "str" },
+            deleteDeviceUsingDELETE_deviceId: { value: "" },
+            deleteDeviceUsingDELETE_deviceIdType: { value: "str" },
+            getDeviceCredentialsByDeviceIdUsingGET_deviceId: { value: "" },
+            getDeviceCredentialsByDeviceIdUsingGET_deviceIdType: { value: "str" },
+            findByQueryUsingPOST_1_body: { value: "" },
+            findByQueryUsingPOST_1_bodyType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.png',
+        label: function () {
+            return this.name || this.method || "tb-device-controller";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-processDevicesBulkImportUsingPOST_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-processDevicesBulkImportUsingPOST_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#processDevicesBulkImportUsingPOST_body").hide();
+
+                $("#node-input-updateDeviceCredentialsUsingPOST_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updateDeviceCredentialsUsingPOST_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updateDeviceCredentialsUsingPOST_body").hide();
+
+                $("#node-input-getDeviceInfoByIdUsingGET_deviceId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getDeviceInfoByIdUsingGET_deviceIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getDeviceInfoByIdUsingGET_deviceId").hide();
+
+                $("#node-input-getDeviceByIdUsingGET_deviceId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getDeviceByIdUsingGET_deviceIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getDeviceByIdUsingGET_deviceId").hide();
+
+                $("#node-input-deleteDeviceUsingDELETE_deviceId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteDeviceUsingDELETE_deviceIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteDeviceUsingDELETE_deviceId").hide();
+
+                $("#node-input-getDeviceCredentialsByDeviceIdUsingGET_deviceId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getDeviceCredentialsByDeviceIdUsingGET_deviceIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getDeviceCredentialsByDeviceIdUsingGET_deviceId").hide();
+
+                $("#node-input-findByQueryUsingPOST_1_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-findByQueryUsingPOST_1_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#findByQueryUsingPOST_1_body").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'processDevicesBulkImportUsingPOST') {
+
+                }
+                if ($("#node-input-method").val() === 'updateDeviceCredentialsUsingPOST') {
+
+                }
+                if ($("#node-input-method").val() === 'getDeviceInfoByIdUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'getDeviceTypesUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'getDeviceByIdUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteDeviceUsingDELETE') {
+
+                }
+                if ($("#node-input-method").val() === 'getDeviceCredentialsByDeviceIdUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'findByQueryUsingPOST_1') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'processDevicesBulkImportUsingPOST') {
+
+                    }
+                    if ($("#node-input-method").val() === 'updateDeviceCredentialsUsingPOST') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceInfoByIdUsingGET') {
+
+                        $("#getDeviceInfoByIdUsingGET_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceTypesUsingGET') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceByIdUsingGET') {
+
+                        $("#getDeviceByIdUsingGET_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteDeviceUsingDELETE') {
+
+                        $("#deleteDeviceUsingDELETE_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceCredentialsByDeviceIdUsingGET') {
+
+                        $("#getDeviceCredentialsByDeviceIdUsingGET_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'findByQueryUsingPOST_1') {
+
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'processDevicesBulkImportUsingPOST') {
+
+                    }
+                    if ($("#node-input-method").val() === 'updateDeviceCredentialsUsingPOST') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceInfoByIdUsingGET') {
+
+                        $("#getDeviceInfoByIdUsingGET_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceTypesUsingGET') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceByIdUsingGET') {
+
+                        $("#getDeviceByIdUsingGET_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteDeviceUsingDELETE') {
+
+                        $("#deleteDeviceUsingDELETE_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getDeviceCredentialsByDeviceIdUsingGET') {
+
+                        $("#getDeviceCredentialsByDeviceIdUsingGET_deviceId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'findByQueryUsingPOST_1') {
+
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="tb-device-controller">
+
+    <div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="TbDeviceController.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="processDevicesBulkImportUsingPOST" data-i18n="TbDeviceController.parameters.processDevicesBulkImportUsingPOST"></option>
+            <option value="updateDeviceCredentialsUsingPOST" data-i18n="TbDeviceController.parameters.updateDeviceCredentialsUsingPOST"></option>
+            <option value="getDeviceInfoByIdUsingGET" data-i18n="TbDeviceController.parameters.getDeviceInfoByIdUsingGET"></option>
+            <option value="getDeviceTypesUsingGET" data-i18n="TbDeviceController.parameters.getDeviceTypesUsingGET"></option>
+            <option value="getDeviceByIdUsingGET" data-i18n="TbDeviceController.parameters.getDeviceByIdUsingGET"></option>
+            <option value="deleteDeviceUsingDELETE" data-i18n="TbDeviceController.parameters.deleteDeviceUsingDELETE"></option>
+            <option value="getDeviceCredentialsByDeviceIdUsingGET" data-i18n="TbDeviceController.parameters.getDeviceCredentialsByDeviceIdUsingGET"></option>
+            <option value="findByQueryUsingPOST_1" data-i18n="TbDeviceController.parameters.findByQueryUsingPOST_1"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="TbDeviceController.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="processDevicesBulkImportUsingPOST_body">
+        <label for="node-input-processDevicesBulkImportUsingPOST_body"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.body"></span></label>
+
+        <input type="text" id="node-input-processDevicesBulkImportUsingPOST_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-processDevicesBulkImportUsingPOST_bodyType">
+    </div>
+
+    <div class="form-row" id="updateDeviceCredentialsUsingPOST_body">
+        <label for="node-input-updateDeviceCredentialsUsingPOST_body"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.body"></span></label>
+
+        <input type="text" id="node-input-updateDeviceCredentialsUsingPOST_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-updateDeviceCredentialsUsingPOST_bodyType">
+    </div>
+
+    <div class="form-row" id="getDeviceInfoByIdUsingGET_deviceId">
+        <label for="node-input-getDeviceInfoByIdUsingGET_deviceId"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.deviceId"></span></label>
+
+        <input type="text" id="node-input-getDeviceInfoByIdUsingGET_deviceId" placeholder="A string value representing the device id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-getDeviceInfoByIdUsingGET_deviceIdType">
+    </div>
+
+    <div class="form-row" id="getDeviceByIdUsingGET_deviceId">
+        <label for="node-input-getDeviceByIdUsingGET_deviceId"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.deviceId"></span></label>
+
+        <input type="text" id="node-input-getDeviceByIdUsingGET_deviceId" placeholder="A string value representing the device id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-getDeviceByIdUsingGET_deviceIdType">
+    </div>
+
+    <div class="form-row" id="deleteDeviceUsingDELETE_deviceId">
+        <label for="node-input-deleteDeviceUsingDELETE_deviceId"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.deviceId"></span></label>
+
+        <input type="text" id="node-input-deleteDeviceUsingDELETE_deviceId" placeholder="A string value representing the device id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-deleteDeviceUsingDELETE_deviceIdType">
+    </div>
+
+    <div class="form-row" id="getDeviceCredentialsByDeviceIdUsingGET_deviceId">
+        <label for="node-input-getDeviceCredentialsByDeviceIdUsingGET_deviceId"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.deviceId"></span></label>
+
+        <input type="text" id="node-input-getDeviceCredentialsByDeviceIdUsingGET_deviceId" placeholder="A string value representing the device id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-getDeviceCredentialsByDeviceIdUsingGET_deviceIdType">
+    </div>
+
+    <div class="form-row" id="findByQueryUsingPOST_1_body">
+        <label for="node-input-findByQueryUsingPOST_1_body"><i class="fa fa-list"></i> <span data-i18n="TbDeviceController.parameters.body"></span></label>
+
+        <input type="text" id="node-input-findByQueryUsingPOST_1_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-findByQueryUsingPOST_1_bodyType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tb-device-controller">
+
+    <p> ThingsBoard open-source IoT platform REST API Device Controller.</p>
+    <p><b>Methods</b></p>
+        <h3>POST /api/device/bulk_import</h3>
+        <p>There's an ability to import the bulk of devices using the only .csv file.
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /api/device/credentials</h3>
+        <p>During device creation, platform generates random 'ACCESS_TOKEN' credentials. Use this method to update the device credentials. First use 'getDeviceCredentialsByDeviceId' to get the credentials id and value. Then use current method to update the credentials type and value. It is not possible to create multiple device credentials for the same device. The structure of device credentials id and value is simple for the 'ACCESS_TOKEN' but is much more complex for the 'MQTT_BASIC' or 'LWM2M_CREDENTIALS'.
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /api/device/info/{deviceId}</h3>
+        <p>Fetch the Device Info object based on the provided Device Id. If the user has the authority of 'Tenant Administrator', the server checks that the device is owned by the same tenant. If the user has the authority of 'Customer User', the server checks that the device is assigned to the same customer. Device Info is an extension of the default Device object that contains information about the assigned customer name and device profile name. 
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>deviceId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /api/device/types</h3>
+        <p>Returns a set of unique device profile names based on devices that are either owned by the tenant or assigned to the customer which user is performing the request.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        </dl>
+        <h3>GET /api/device/{deviceId}</h3>
+        <p>Fetch the Device object based on the provided Device Id. If the user has the authority of 'TENANT_ADMIN', the server checks that the device is owned by the same tenant. If the user has the authority of 'CUSTOMER_USER', the server checks that the device is assigned to the same customer.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>deviceId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>DELETE /api/device/{deviceId}</h3>
+        <p>Deletes the device, it's credentials and all the relations (from and to the device). Referencing non-existing device Id will cause an error.
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>deviceId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /api/device/{deviceId}/credentials</h3>
+        <p>If during device creation there wasn't specified any credentials, platform generates random 'ACCESS_TOKEN' credentials.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>deviceId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /api/devices</h3>
+        <p>Returns all devices that are related to the specific entity. The entity id, relation type, device types, depth of the search, and other query parameters defined using complex 'DeviceSearchQuery' object. See 'Model' tab of the Parameters for more info.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+</script>
